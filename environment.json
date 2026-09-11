@@ -1,0 +1,30 @@
+import json
+import subprocess
+import os
+
+env = {}
+
+# OS release
+try:
+    with open('/etc/os-release') as f:
+        for line in f:
+            if '=' in line:
+                k, v = line.strip().split('=', 1)
+                env[k] = v.strip('\"')
+except: pass
+
+# Architecture
+env['ARCH'] = subprocess.getoutput('uname -m')
+
+# ROS info
+env['ROS_DISTRO'] = os.environ.get('ROS_DISTRO', 'jazzy')
+env['ROS_DOMAIN_ID'] = os.environ.get('ROS_DOMAIN_ID', '16')
+
+# RMW
+try:
+    from rclpy.utilities import get_rmw_implementation_identifier
+    env['RMW_IMPLEMENTATION'] = get_rmw_implementation_identifier()
+except: pass
+
+with open('evidence/pr01/environment.json', 'w') as f:
+    json.dump(env, f, indent=2)

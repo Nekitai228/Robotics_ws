@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  pr01-student-demo:
+    image: osrf/ros:jazzy-desktop-full@sha256:ae7ad3ac243da1dfd8bd402a2fa08e149ffbf7a385013bd8ef798d0800accdc8
+    hostname: pr01-demo
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=16
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - /mnt/wslg:/mnt/wslg:ro
+      - .:/work
+    working_dir: /work
+    command: sleep infinity
