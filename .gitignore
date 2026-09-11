@@ -1,0 +1,19 @@
+# Colcon build artifacts
+build/
+install/
+log/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Docker
+.docker/
