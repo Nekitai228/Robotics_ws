@@ -1,0 +1,11 @@
+{
+  "launch_method": "wsl2",
+  "os": "Ubuntu 24.04.5 LTS",
+  "ros_distro": "jazzy",
+  "gazebo_version": "8.11.0",
+  "rmw": "rmw_fastrtps_cpp",
+  "domains": {
+    "working": 16,
+    "isolated": 17
+  }
+}

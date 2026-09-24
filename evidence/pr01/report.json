@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR01",
+  "commit": "24bbe20d87591982988fe0347b8daa4405f401cc",
+  "course_kit": {
+    "version": "v1-w03",
+    "archive_sha256": "7fbfd3e8161ab6c6ebefc7663efdaf77d9a7d490399743507f33dcefbd5ac522"
+  },
+  "commands": [
+    "ros2 doctor --report",
+    "ros2 run turtlesim turtlesim_node",
+    "ros2 run turtlesim turtle_teleop_key",
+    "ros2 node list --no-daemon --spin-time 2",
+    "ros2 topic list -t",
+    "ros2 node info /turtlesim",
+    "ros2 topic type /turtle1/pose",
+    "ros2 topic echo /turtle1/pose --once",
+    "ros2 topic hz /turtle1/pose",
+    "timeout 5s ros2 topic echo /turtle1/pose \"$POSE_TYPE\" --once"
+  ],
+  "tests": [
+    {
+      "name": "Граф в домене 16: видны /turtlesim и /teleop_turtle; стрелки управляют черепахой",
+      "status": "passed"
+    },
+    {
+      "name": "В /turtle1/pose поступает поза с частотой около 62.5 Гц",
+      "status": "passed"
+    },
+    {
+      "name": "В домене 17 поза не поступает за 5 секунд, exit=124",
+      "status": "passed"
+    },
+    {
+      "name": "После возврата в домен 16 поза поступает, exit=0",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "Симулятор остаётся в ROS_DOMAIN_ID=16. Управление и проверяющий подписчик запускаются заново в ROS_DOMAIN_ID=17. /turtlesim не обнаруживается, за 5 секунд поза не приходит, exit=124.",
+    "root_cause": "Ноды ROS 2 обнаруживают друг друга внутри одного домена. Изменение ROS_DOMAIN_ID в терминале не меняет домен уже запущенной ноды, поэтому teleop нужно перезапустить.",
+    "proof_after": "Управление перезапущено в ROS_DOMAIN_ID=16. Повтор той же проверки получает позу из /turtle1/pose, exit=0; обе ноды обнаруживаются, черепаха снова управляется."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 2,
+    "self_study_hours": 2
+  },
+  "ai_used": true
+}
