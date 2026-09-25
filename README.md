@@ -1,4 +1,4 @@
-# ПР01 — окружение и граф ROS 2
+# Практические работы по ROS 2
 
 Работа выполняется в WSL2: Ubuntu 24.04, ROS 2 Jazzy. Для опыта нужны три Bash-терминала в одной среде. Ниже используются домены 16 и 17; если преподаватель назначил другую пару, замените оба значения. Исходные результаты этого прогона находятся в [evidence/pr01/graph.md](evidence/pr01/graph.md).
 
@@ -100,3 +100,55 @@ python3 .course-kit/v1/tools/check_practice.py PR01 --submission .
 ```
 
 Для ПР01 собственный ROS-пакет и сборка colcon не требуются.
+
+## ПР02 — пакет turtle_bringup
+
+Работа выполняется в WSL2 с Ubuntu 24.04 и ROS 2 Jazzy. Исходники
+пакета находятся в `src/turtle_bringup/`, результаты — в `evidence/pr02/`.
+
+### Сборка
+
+Из корня репозитория в Bash:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+colcon build --symlink-install --packages-select turtle_bringup
+source install/setup.bash
+ros2 pkg prefix turtle_bringup
+```
+
+Установленный launch-файл находится в
+`share/turtle_bringup/launch/sim.launch.py`.
+
+### Запуск
+
+В первом терминале:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+export ROS_DOMAIN_ID=16
+ros2 launch turtle_bringup sim.launch.py
+```
+
+Во втором терминале с тем же `ROS_DOMAIN_ID`:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export ROS_DOMAIN_ID=16
+ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist \
+  '{linear: {x: 1.0}, angular: {z: 0.5}}'
+ros2 topic echo /turtle1/pose --once
+```
+
+Для воспроизведения сбоя отправьте тот же Twist в `/cmd_vel`.
+У этого топика нет подписчика turtlesim. Подробные команды, выводы
+и объяснение исправления находятся в `evidence/pr02/commands.md`,
+типы сообщений — в `evidence/pr02/types.md`.
+
+### Локальная проверка
+
+```bash
+python3 -m py_compile src/turtle_bringup/launch/sim.launch.py
+python3 .course-kit/v1/tools/check_practice.py PR02 --submission .
+```
