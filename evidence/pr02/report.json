@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR02",
+  "commit": "4c0c59e6830a561a275124a96010f9061fd36d13",
+  "course_kit": {
+    "version": "v1-w03",
+    "archive_sha256": "7fbfd3e8161ab6c6ebefc7663efdaf77d9a7d490399743507f33dcefbd5ac522"
+  },
+  "commands": [
+    "ros2 pkg create --build-type ament_python --license Apache-2.0 turtle_bringup --dependencies launch launch_ros turtlesim",
+    "colcon build --symlink-install --packages-select turtle_bringup",
+    "ros2 launch turtle_bringup sim.launch.py",
+    "ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist '{linear: {x: 1.0}, angular: {z: 0.5}}'",
+    "ros2 topic info /cmd_vel --verbose",
+    "ros2 topic info /turtle1/cmd_vel --verbose",
+    "ros2 topic echo /turtle1/pose --once"
+  ],
+  "tests": [
+    {
+      "name": "Сборка пустого пакета и пакета с launch-файлом",
+      "status": "passed"
+    },
+    {
+      "name": "Launch запускает и останавливает ноду /turtlesim",
+      "status": "passed"
+    },
+    {
+      "name": "Публикация Twist в /turtle1/cmd_vel меняет позу черепахи",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "Публикация Twist в /cmd_vel: 1 издатель, 0 подписчиков; черепаха стоит.",
+    "root_cause": "Нода turtlesim подписана на /turtle1/cmd_vel. /cmd_vel — другой топик, хотя тип сообщения совпадает.",
+    "proof_after": "После замены имени на /turtle1/cmd_vel обнаружены 1 издатель и 1 подписчик; поза черепахи изменилась."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 2,
+    "self_study_hours": 2
+  },
+  "ai_used": true
+}
