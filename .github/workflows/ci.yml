@@ -1,8 +1,8 @@
-name: PR02 checks
+name: PR03 checks
 
 on:
   push:
-    branches: [pr02]
+    branches: [pr03]
   pull_request:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
         run: |
           test "$(uname -m)" = x86_64
           apt-get update
-          apt-get install -y --no-install-recommends ca-certificates curl xz-utils
+          apt-get install -y --no-install-recommends ca-certificates curl xz-utils python3-pytest ros-jazzy-ament-copyright ros-jazzy-ament-flake8 ros-jazzy-ament-pep257
           curl -fsSLo /tmp/node.tar.xz https://nodejs.org/dist/v22.19.0/node-v22.19.0-linux-x64.tar.xz
           printf '%s  %s\n' c0649af18e6a24f6fe5535a3e86b341dd49a8e71117c8b68bde973ef834f16f2 /tmp/node.tar.xz | sha256sum -c -
           tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1
@@ -26,14 +26,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build PR02 package
+      - name: Build PR03 package
         shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
-          colcon build --symlink-install --packages-select turtle_bringup
+          colcon build --symlink-install --packages-select turtle_bringup patrol
           source install/setup.bash
           test -f "$(ros2 pkg prefix turtle_bringup)/share/turtle_bringup/launch/sim.launch.py"
           python3 -m py_compile src/turtle_bringup/launch/sim.launch.py
+          (cd src/patrol && python3 -m pytest test)
 
       - name: Download pinned course kit
         shell: bash
@@ -46,6 +47,6 @@ jobs:
           mkdir -p .course-kit
           tar -xzf course-kit.tar.gz -C .course-kit
 
-      - name: Check PR02 evidence
+      - name: Check PR03 evidence
         shell: bash
-        run: python3 .course-kit/v1/tools/check_practice.py PR02 --submission .
+        run: python3 .course-kit/v1/tools/check_practice.py PR03 --submission .

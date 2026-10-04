@@ -152,3 +152,20 @@ ros2 topic echo /turtle1/pose --once
 python3 -m py_compile src/turtle_bringup/launch/sim.launch.py
 python3 .course-kit/v1/tools/check_practice.py PR02 --submission .
 ```
+
+## ПР03 — нода patrol
+
+Пакет patrol получает /turtle1/pose и публикует Twist по таймеру 0.1 с.
+До получения позы команда нулевая, после — linear.x=0.5, angular.z=0.3.
+
+Сборка: `colcon build --symlink-install --packages-select turtle_bringup patrol`.
+После сборки выполните `source install/setup.bash`.
+
+Тесты: `(cd src/patrol && python3 -m pytest test)`.
+
+В первом терминале запустите `ros2 launch turtle_bringup sim.launch.py`.
+Во втором: `ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel`.
+Оба терминала должны использовать `ROS_DOMAIN_ID=16`.
+
+Запуск patrol без remap воспроизводит ошибку имени топика.
+Выводы опытов и объяснения находятся в `evidence/pr03/demo.md`.
