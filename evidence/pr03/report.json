@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR03",
+  "commit": "b625dae657356c11ae9ca2211a9f4352bd665db4",
+  "course_kit": {
+    "version": "v1-w03",
+    "archive_sha256": "7fbfd3e8161ab6c6ebefc7663efdaf77d9a7d490399743507f33dcefbd5ac522"
+  },
+  "commands": [
+    "colcon build --symlink-install --packages-select turtle_bringup patrol",
+    "(cd src/patrol && python3 -m pytest test)",
+    "ros2 launch turtle_bringup sim.launch.py",
+    "ros2 run patrol patrol",
+    "ros2 node info /patrol",
+    "ros2 topic info /cmd_vel --verbose",
+    "ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel",
+    "ros2 topic info /turtle1/cmd_vel --verbose",
+    "timeout --signal=INT 10s ros2 topic hz /turtle1/cmd_vel",
+    "ros2 topic echo /turtle1/pose --once"
+  ],
+  "tests": [
+    {
+      "name": "Тесты функции выбора команды и линтеры пакета",
+      "status": "passed"
+    },
+    {
+      "name": "Нулевая команда до получения позы",
+      "status": "passed"
+    },
+    {
+      "name": "Движение после remap и остановка после Ctrl+C",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "Запуск patrol без remap: команды публикуются в /cmd_vel, черепаха стоит.",
+    "root_cause": "Издатель использует /cmd_vel, а turtlesim подписан на /turtle1/cmd_vel.",
+    "proof_after": "Remap cmd_vel:=/turtle1/cmd_vel соединяет издателя и подписчика. Поза меняется, частота измерена за 10 секунд."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 2.0,
+    "self_study_hours": 1.0
+  },
+  "ai_used": true
+}
