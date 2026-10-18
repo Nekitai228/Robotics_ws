@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR04",
+  "commit": "c36787724858e3c133c652204f8674069af7621c",
+  "course_kit": {
+    "version": "v1-w06",
+    "archive_sha256": "6eda53e1c566f7f0a7e09d7afe1e5a6f3b98397175a7e57dede9a84c6d14d0fe",
+    "archive_url": "https://ros.lms.ci.nsu.ru/downloads/robotics-course-kit-v1-w06-6eda53e1c566.tar.gz"
+  },
+  "commands": [
+    "colcon build --symlink-install --packages-select turtle_bringup patrol",
+    "(cd src/patrol && python3 -m pytest test -q)",
+    "ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel",
+    "ros2 param set /patrol linear_speed 0.8",
+    "ros2 param set /patrol turn_rate -0.5",
+    "ros2 param set /patrol publish_hz 5.0",
+    "ros2 param set /patrol publish_hz 0.0",
+    "ros2 param get /patrol publish_hz",
+    "ros2 topic hz /turtle1/cmd_vel",
+    "ros2 service call /clear std_srvs/srv/Empty '{}'",
+    "ros2 action list -t"
+  ],
+  "tests": [
+    {
+      "name": "Package build",
+      "status": "passed"
+    },
+    {
+      "name": "32 unit, ROS state and lint tests; 1 generated test skipped",
+      "status": "passed"
+    },
+    {
+      "name": "Deliberate zero-frequency failure in branch pr04-defect",
+      "status": "passed"
+    },
+    {
+      "name": "Live command speeds, 10 to 5 Hz, zero rejection preserves 5 Hz",
+      "status": "passed"
+    },
+    {
+      "name": "Clear service request and rotate action discovery",
+      "status": "passed"
+    },
+    {
+      "name": "Official PR04 evidence contract",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "In branch pr04-defect, run patrol with the frequency check disabled, then ros2 param set /patrol publish_hz 0.0. Node exits with ZeroDivisionError; the CLI request times out. Real logs are in defect-node.txt and defect-cli.txt.",
+    "root_cause": "The requested frequency reaches timer recreation without validation. Computing the period 1.0 / 0.0 raises ZeroDivisionError after removing the old timer.",
+    "proof_after": "The same zero request is rejected before changing state. ros2 param get returns 5.0 and ros2 topic hz still measures 5.000 Hz. Tests verify the timer object and all active values remain unchanged."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 1,
+    "self_study_hours": 1
+  },
+  "ai_used": true
+}

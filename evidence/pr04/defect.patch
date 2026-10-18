@@ -1,0 +1,14 @@
+--- fixed/patrol.py
++++ defect/patrol.py
+@@ -46,7 +46,10 @@
+ 
+     def validate_update(self, parameters):
+         """Validate the entire candidate without changing state or timers."""
+-        error = parameter_error(self.candidate_settings(parameters))
++        candidate = self.candidate_settings(parameters)
++        # Deliberate PR04 defect: do not validate the requested frequency.
++        candidate['publish_hz'] = self.settings['publish_hz']
++        error = parameter_error(candidate)
+         return SetParametersResult(successful=not error, reason=error)
+ 
+     def apply_update(self, parameters):

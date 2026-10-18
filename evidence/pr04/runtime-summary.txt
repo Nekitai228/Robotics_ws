@@ -1,0 +1,3 @@
+10 Hz measured: 10.0
+5 Hz measured: 5.0
+After rejected zero: 5.0 Hz
