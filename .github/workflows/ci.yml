@@ -1,8 +1,8 @@
-name: PR03 checks
+name: PR04 checks
 
 on:
   push:
-    branches: [pr03]
+    branches: [pr04]
   pull_request:
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build PR03 package
+      - name: Build PR04 package
         shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
@@ -36,17 +36,35 @@ jobs:
           python3 -m py_compile src/turtle_bringup/launch/sim.launch.py
           (cd src/patrol && python3 -m pytest test)
 
+      - name: Read pinned course kit from PR04 report
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import re
+          from urllib.parse import urlparse
+
+          kit = json.loads(Path('evidence/pr04/report.json').read_text())['course_kit']
+          url = kit['archive_url']
+          parsed = urlparse(url)
+          assert parsed.scheme == 'https' and parsed.netloc == 'ros.lms.ci.nsu.ru'
+          assert '\n' not in url and '\r' not in url
+          assert re.fullmatch('[0-9a-f]{64}', kit['archive_sha256'])
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('COURSE_KIT_URL=' + url + '\n')
+              output.write('COURSE_KIT_SHA256=' + kit['archive_sha256'] + '\n')
+          PY
+
       - name: Download pinned course kit
         shell: bash
-        env:
-          COURSE_KIT_URL: https://ros.lms.ci.nsu.ru/downloads/robotics-course-kit-v1-w03-7fbfd3e8161a.tar.gz
-          COURSE_KIT_SHA256: 7fbfd3e8161ab6c6ebefc7663efdaf77d9a7d490399743507f33dcefbd5ac522
         run: |
-          curl -fsSLo course-kit.tar.gz "$COURSE_KIT_URL"
-          printf '%s  %s\n' "$COURSE_KIT_SHA256" course-kit.tar.gz | sha256sum -c -
+          curl --retry 2 --connect-timeout 10 --max-time 120 -fsSLo /tmp/course-kit.tar.gz "$COURSE_KIT_URL"
+          printf '%s  %s\n' "$COURSE_KIT_SHA256" /tmp/course-kit.tar.gz | sha256sum -c -
           mkdir -p .course-kit
-          tar -xzf course-kit.tar.gz -C .course-kit
+          tar -xzf /tmp/course-kit.tar.gz -C .course-kit
 
-      - name: Check PR03 evidence
+      - name: Check PR04 evidence
         shell: bash
-        run: python3 .course-kit/v1/tools/check_practice.py PR03 --submission .
+        run: python3 .course-kit/v1/tools/check_practice.py PR04 --submission .

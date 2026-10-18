@@ -3,11 +3,12 @@
 <package format="3">
   <name>patrol</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Patrol with validated dynamic velocity and frequency parameters</description>
   <maintainer email="nekitaikapov@gmail.com">iakup</maintainer>
   <license>Apache-2.0</license>
 
   <depend>rclpy</depend>
+  <depend>rcl_interfaces</depend>
   <depend>geometry_msgs</depend>
   <depend>turtlesim</depend>
 
