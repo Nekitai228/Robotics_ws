@@ -34,26 +34,51 @@ def official_url(url):
 
 
 def find_archive(metadata):
-    """Read an archive URL and SHA256 from the official API metadata."""
-    if isinstance(metadata, dict):
-        hashes = [value for value in metadata.values()
-                  if isinstance(value, str)
-                  and re.fullmatch('[0-9a-fA-F]{64}', value)]
-        urls = [urljoin(API, value) for value in metadata.values()
-                if isinstance(value, str) and '.tar.gz' in value
-                and official_url(urljoin(API, value))]
-        if len(hashes) == 1 and len(urls) == 1:
-            return urls[0], hashes[0].lower()
-        for value in metadata.values():
-            found = find_archive(value)
-            if found:
-                return found
-    elif isinstance(metadata, list):
-        for value in metadata:
-            found = find_archive(value)
-            if found:
-                return found
-    return None
+    """Select a pinned archive, excluding checksum files and duplicate URLs."""
+    leaves = []
+
+    def collect(value, keys=()):
+        if isinstance(value, dict):
+            for key, child in value.items():
+                collect(child, keys + (str(key).lower(),))
+        elif isinstance(value, list):
+            for child in value:
+                collect(child, keys)
+        elif isinstance(value, str):
+            leaves.append((keys, value.strip()))
+
+    collect(metadata)
+    hashes = {value.lower() for _, value in leaves
+              if re.fullmatch('[0-9a-fA-F]{64}', value)}
+    if len(hashes) == 1:
+        digest = hashes.pop()
+        ranked = {}
+        for keys, value in leaves:
+            url = urljoin(API, value)
+            if not official_url(url):
+                continue
+            if not urlparse(url).path.endswith('.tar.gz'):
+                continue
+            score = 0
+            if digest[:12] in urlparse(url).path.lower():
+                score += 10
+            if any(any(word in key for word in
+                       ('immutable', 'pinned', 'versioned')) for key in keys):
+                score += 5
+            ranked[url] = max(ranked.get(url, -1), score)
+        if ranked:
+            highest = max(ranked.values())
+            preferred = [url for url, score in ranked.items()
+                         if score == highest]
+            if len(preferred) == 1:
+                return preferred[0], digest
+    # Preserve ambiguity when a response describes several distinct releases.
+    children = (metadata.values() if isinstance(metadata, dict)
+                else metadata if isinstance(metadata, list) else [])
+    candidates = {found for child in children
+                  if isinstance(child, (dict, list))
+                  and (found := find_archive(child)) is not None}
+    return candidates.pop() if len(candidates) == 1 else None
 
 
 def install_archive(data, url, digest):
@@ -127,9 +152,12 @@ def main():
             raise SystemExit('Cached metadata and installed course kit differ')
     else:
         try:
-            found = find_archive(json.loads(download(API)))
+            raw_metadata = download(API)
+            KIT.mkdir(exist_ok=True)
+            (KIT / 'api-course-kit.json').write_bytes(raw_metadata)
+            found = find_archive(json.loads(raw_metadata))
             if not found:
-                raise ValueError('API metadata has no unambiguous archive URL/SHA256; use --archive, --url and --sha256')
+                raise ValueError('Archive URL/SHA256 could not be selected. API response saved to .course-kit/api-course-kit.json; use --archive, --url and --sha256 if necessary')
             url, digest = found
             metadata = install_archive(download(url), url, digest)
         except Exception as error:
