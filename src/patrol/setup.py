@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='iakup',
     maintainer_email='nekitaikapov@gmail.com',
-    description='TODO: Package description',
+    description='Patrol with validated dynamic parameters',
     license='Apache-2.0',
     extras_require={
         'test': [
