@@ -175,5 +175,12 @@ python3 .course-kit/v1/tools/check_practice.py PR02 --submission .
 Добавлены параметры linear_speed, turn_rate и publish_hz с проверкой диапазонов
 и конечности. Неподходящие значения отклоняются до изменения состояния.
 Смена частоты заменяет таймер; одновременно работает только один таймер.
-Команды запуска, проверки и оформления отчёта: [docs/pr04.md](docs/pr04.md).
 Реальные результаты находятся в evidence/pr04/parameters.md.
+
+Сборка: `colcon build --symlink-install --packages-select turtle_bringup patrol`.
+После сборки: `source install/setup.bash`.
+Запуск симулятора: `ros2 launch turtle_bringup sim.launch.py`.
+Запуск ноды: `ros2 run patrol patrol --ros-args -r cmd_vel:=/turtle1/cmd_vel`.
+В обоих терминалах задайте `ROS_DOMAIN_ID=16`.
+Проверка: `(cd src/patrol && python3 -m pytest test)`.
+Подготовка отчёта с официальным course kit: `python3 tools/prepare_pr04_report.py`.
