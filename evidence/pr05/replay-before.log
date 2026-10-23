@@ -1,0 +1,2 @@
+[INFO] [1792737614.709953503] [robot_a.pose_listener]: Subscriber reliability: reliable
+[WARN] [1792737614.711736654] [robot_a.pose_listener]: New publisher discovered on topic 'sensor_pose', offering incompatible QoS. No messages will be received from it. Last incompatible policy: RELIABILITY

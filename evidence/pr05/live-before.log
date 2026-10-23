@@ -1,0 +1,23 @@
+[INFO] [launch]: All log files can be found below /home/iakup/.ros/log/2026-10-23-13-39-43-182855-notebook-3822
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: namespace=robot_a, record=false, subscriber_reliability=reliable
+[INFO] [turtlesim_node-1]: process started with pid [3825]
+[INFO] [patrol-2]: process started with pid [3826]
+[INFO] [pose_relay-3]: process started with pid [3827]
+[INFO] [pose_listener-4]: process started with pid [3828]
+[turtlesim_node-1] [INFO] [1792737583.509545750] [turtlesim]: Starting turtlesim with node name /turtlesim
+[turtlesim_node-1] [INFO] [1792737583.527642644] [turtlesim]: Spawning turtle [turtle1] at x=[5.544445], y=[5.544445], theta=[0.000000]
+[pose_listener-4] [INFO] [1792737584.230727488] [robot_a.pose_listener]: Subscriber reliability: reliable
+[pose_listener-4] [WARN] [1792737584.234363088] [robot_a.pose_listener]: New publisher discovered on topic 'sensor_pose', offering incompatible QoS. No messages will be received from it. Last incompatible policy: RELIABILITY
+[pose_relay-3] [WARN] [1792737584.236682983] [robot_a.pose_relay]: New subscription discovered on topic 'sensor_pose', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY
+[pose_relay-3] [WARN] [1792737593.121287848] [robot_a.pose_relay]: New subscription discovered on topic 'sensor_pose', requesting incompatible QoS. No messages will be sent to it. Last incompatible policy: RELIABILITY
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [pose_listener-4]: sending signal 'SIGINT' to process[pose_listener-4]
+[INFO] [pose_relay-3]: sending signal 'SIGINT' to process[pose_relay-3]
+[INFO] [patrol-2]: sending signal 'SIGINT' to process[patrol-2]
+[INFO] [turtlesim_node-1]: sending signal 'SIGINT' to process[turtlesim_node-1]
+[turtlesim_node-1] [INFO] [1792737595.782780840] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [turtlesim_node-1]: process has finished cleanly [pid 3825]
+[INFO] [pose_listener-4]: process has finished cleanly [pid 3828]
+[INFO] [pose_relay-3]: process has finished cleanly [pid 3827]
+[INFO] [patrol-2]: process has finished cleanly [pid 3826]

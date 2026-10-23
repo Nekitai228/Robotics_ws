@@ -1,0 +1,12 @@
+{
+  "domain_id": 118,
+  "live_reliable_received": false,
+  "live_best_effort_received": true,
+  "record_false_created_bag": false,
+  "storage": "mcap",
+  "recorded_topics": 1,
+  "recorded_messages": 429,
+  "replay_reliable_received": false,
+  "replay_best_effort_received": true,
+  "same_bag_used_for_both_replay_profiles": true
+}

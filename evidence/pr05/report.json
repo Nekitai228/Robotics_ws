@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR05",
+  "commit": "c71ff340af5c7054894ea8fd77adf146257b887e",
+  "course_kit": {
+    "version": "v1-w06",
+    "archive_sha256": "6eda53e1c566f7f0a7e09d7afe1e5a6f3b98397175a7e57dede9a84c6d14d0fe",
+    "archive_url": "https://ros.lms.ci.nsu.ru/downloads/robotics-course-kit-v1-w06-6eda53e1c566.tar.gz"
+  },
+  "commands": [
+    "colcon build --symlink-install",
+    "colcon test --event-handlers console_direct+",
+    "colcon test-result --verbose",
+    "ros2 launch course_bringup patrol.launch.py namespace:=robot_a subscriber_reliability:=reliable record:=false bag_dir:=/home/iakup/robotics_ws/evidence/pr05/record-disabled-must-not-exist",
+    "ros2 node list --no-daemon --spin-time 1",
+    "ros2 topic list -t",
+    "ros2 topic info /robot_a/sensor_pose --verbose",
+    "ros2 node info /robot_a/patrol",
+    "ros2 topic echo /robot_a/sensor_pose --qos-reliability reliable --once",
+    "ros2 launch course_bringup patrol.launch.py namespace:=robot_a subscriber_reliability:=best_effort record:=true bag_dir:=/home/iakup/robotics_ws/evidence/pr05/bag",
+    "ros2 topic info /robot_a/sensor_pose --verbose",
+    "ros2 topic echo /robot_a/sensor_pose --qos-reliability best_effort --once",
+    "ros2 node list --no-daemon --spin-time 1",
+    "ros2 bag play /home/iakup/robotics_ws/evidence/pr05/bag --loop --disable-keyboard-controls --qos-profile-overrides-path config/qos-overrides.yaml",
+    "ros2 run course_bringup pose_listener --ros-args -r __ns:=/robot_a -p subscriber_reliability:=reliable",
+    "ros2 topic info /robot_a/sensor_pose --verbose",
+    "ros2 topic echo /robot_a/sensor_pose --qos-reliability reliable --once",
+    "ros2 run course_bringup pose_listener --ros-args -r __ns:=/robot_a -p subscriber_reliability:=best_effort",
+    "ros2 topic info /robot_a/sensor_pose --verbose",
+    "ros2 topic echo /robot_a/sensor_pose --qos-reliability best_effort --once",
+    "ros2 bag info /home/iakup/robotics_ws/evidence/pr05/bag"
+  ],
+  "tests": [
+    {
+      "name": "Build all three packages and load installed launch arguments",
+      "status": "passed"
+    },
+    {
+      "name": "Colcon: 46 tests, 0 errors, 0 failures, 3 skipped",
+      "status": "passed"
+    },
+    {
+      "name": "Namespaced graph and command/pose remaps",
+      "status": "passed"
+    },
+    {
+      "name": "record=false creates no recorder or bag; record=true creates MCAP",
+      "status": "passed"
+    },
+    {
+      "name": "Live best-effort publisher: reliable receives none, best_effort receives poses",
+      "status": "passed"
+    },
+    {
+      "name": "Replay both QoS profiles from the same single-topic MCAP bag",
+      "status": "passed"
+    },
+    {
+      "name": "All launch children stop cleanly on SIGINT",
+      "status": "passed"
+    },
+    {
+      "name": "Official PR05 evidence contract (course kit v1-w06)",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "Launch with subscriber_reliability:=reliable and record:=false. The /robot_a/sensor_pose topic is visible, but reliable echo times out with RELIABILITY incompatibility. Repeat reliable echo during replay of the corrected bag: it also times out.",
+    "root_cause": "pose_relay offers BEST_EFFORT reliability, while the subscriber requests RELIABLE. The offered reliability cannot satisfy the requested profile even though topic name and message type match.",
+    "proof_after": "Use subscriber_reliability:=best_effort: live delivery works. Record one MCAP stream with 429 poses, stop all live nodes, then replay this exact bag with config/qos-overrides.yaml. The best-effort listener receives poses, while the reliable listener still receives none. Diagnostics and ros2 bag info are saved in qos-before.txt and qos-after.txt."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true,
+    "replay_verified": true
+  },
+  "time": {
+    "contact_academic_hours": 1,
+    "self_study_hours": 1
+  },
+  "ai_used": true
+}

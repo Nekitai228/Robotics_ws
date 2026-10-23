@@ -1,0 +1,6 @@
+[INFO] [1792737622.158809134] [robot_a.pose_listener]: Subscriber reliability: best_effort
+[INFO] [1792737622.160922078] [robot_a.pose_listener]: Received pose #1: x=7.156, y=6.801
+[INFO] [1792737622.916239016] [robot_a.pose_listener]: Received pose #50: x=7.207, y=7.189
+[INFO] [1792737623.716389234] [robot_a.pose_listener]: Received pose #100: x=7.164, y=7.586
+[INFO] [1792737624.516686413] [robot_a.pose_listener]: Received pose #150: x=7.029, y=7.961
+[INFO] [1792737625.316057486] [robot_a.pose_listener]: Received pose #200: x=6.808, y=8.293
