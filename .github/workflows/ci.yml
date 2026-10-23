@@ -1,8 +1,8 @@
-name: PR04 checks
+name: PR05 checks
 
 on:
   push:
-    branches: [pr04]
+    branches: [pr05]
   pull_request:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
         run: |
           test "$(uname -m)" = x86_64
           apt-get update
-          apt-get install -y --no-install-recommends ca-certificates curl xz-utils python3-pytest ros-jazzy-ament-copyright ros-jazzy-ament-flake8 ros-jazzy-ament-pep257
+          apt-get install -y --no-install-recommends ca-certificates curl xz-utils python3-pytest ros-jazzy-ament-copyright ros-jazzy-ament-flake8 ros-jazzy-ament-pep257 ros-jazzy-rosbag2-storage-mcap
           curl -fsSLo /tmp/node.tar.xz https://nodejs.org/dist/v22.19.0/node-v22.19.0-linux-x64.tar.xz
           printf '%s  %s\n' c0649af18e6a24f6fe5535a3e86b341dd49a8e71117c8b68bde973ef834f16f2 /tmp/node.tar.xz | sha256sum -c -
           tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1
@@ -26,17 +26,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build PR04 package
+      - name: Build PR05 package
         shell: bash
         run: |
           source /opt/ros/jazzy/setup.bash
-          colcon build --symlink-install --packages-select turtle_bringup patrol
+          colcon build --symlink-install
           source install/setup.bash
           test -f "$(ros2 pkg prefix turtle_bringup)/share/turtle_bringup/launch/sim.launch.py"
           python3 -m py_compile src/turtle_bringup/launch/sim.launch.py
-          (cd src/patrol && python3 -m pytest test)
+          test -f "$(ros2 pkg prefix course_bringup)/share/course_bringup/launch/patrol.launch.py"
+          ros2 launch course_bringup patrol.launch.py --show-args
+          colcon test --event-handlers console_direct+
+          colcon test-result --verbose
 
-      - name: Read pinned course kit from PR04 report
+      - name: Read pinned course kit from PR05 report
         shell: bash
         run: |
           python3 - <<'PY'
@@ -46,7 +49,7 @@ jobs:
           import re
           from urllib.parse import urlparse
 
-          kit = json.loads(Path('evidence/pr04/report.json').read_text())['course_kit']
+          kit = json.loads(Path('evidence/pr05/report.json').read_text())['course_kit']
           url = kit['archive_url']
           parsed = urlparse(url)
           assert parsed.scheme == 'https' and parsed.netloc == 'ros.lms.ci.nsu.ru'
@@ -65,6 +68,6 @@ jobs:
           mkdir -p .course-kit
           tar -xzf /tmp/course-kit.tar.gz -C .course-kit
 
-      - name: Check PR04 evidence
+      - name: Check PR05 evidence
         shell: bash
-        run: python3 .course-kit/v1/tools/check_practice.py PR04 --submission .
+        run: python3 .course-kit/v1/tools/check_practice.py PR05 --submission .

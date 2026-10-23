@@ -1,10 +1,13 @@
 """Publish turtle commands with validated parameters and a single timer."""
 
+import signal
+
 from geometry_msgs.msg import Twist
 from patrol.controller import command_from_pose
 from patrol.parameters import DEFAULT_PARAMETERS, parameter_error
 from rcl_interfaces.msg import SetParametersResult
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from turtlesim.msg import Pose
 
@@ -27,7 +30,7 @@ class Patrol(Node):
             raise ValueError(error)
         self.latest_pose = None
         self.pose_subscription = self.create_subscription(
-            Pose, '/turtle1/pose', self.pose_callback, 10,
+            Pose, 'turtle1/pose', self.pose_callback, 10,
         )
         self.command_publisher = self.create_publisher(Twist, 'cmd_vel', 10)
         self.command_timer = self.create_timer(
@@ -79,9 +82,10 @@ def main(args=None):
     node = Patrol()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
         node.destroy_node()
         if rclpy.ok():
             rclpy.shutdown()

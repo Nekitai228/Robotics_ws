@@ -184,3 +184,104 @@ python3 .course-kit/v1/tools/check_practice.py PR02 --submission .
 В обоих терминалах задайте `ROS_DOMAIN_ID=16`.
 Проверка: `(cd src/patrol && python3 -m pytest test)`.
 Подготовка отчёта с официальным course kit: `python3 tools/prepare_pr04_report.py`.
+
+## ПР05 — launch, QoS и MCAP
+
+Пакет `course_bringup` запускает один глобальный turtlesim и ноды
+`/robot_a/patrol`, `/robot_a/pose_relay`, `/robot_a/pose_listener`.
+Внутри нод топики относительные. Launch переназначает вход позы в
+`/turtle1/pose`, выход команды в `/turtle1/cmd_vel`; сенсорный поток
+остаётся `/robot_a/sensor_pose`.
+
+Подготовка в каждом терминале:
+
+```bash
+cd ~/robotics_ws
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+export ROS_DOMAIN_ID=16
+```
+
+Сборка и тесты:
+
+```bash
+colcon build --symlink-install
+source install/setup.bash
+colcon test --event-handlers console_direct+
+colcon test-result --verbose
+```
+
+Первый терминал — намеренно несовместимый подписчик, запись выключена:
+
+```bash
+ros2 launch course_bringup patrol.launch.py \
+  namespace:=robot_a subscriber_reliability:=reliable record:=false
+```
+
+Во втором терминале:
+
+```bash
+ros2 node list
+ros2 topic info /robot_a/sensor_pose --verbose
+timeout --signal=INT 4s ros2 topic echo /robot_a/sensor_pose \
+  --qos-reliability reliable --once
+```
+
+Ожидается таймаут (код 124): издатель best_effort несовместим с
+подписчиком reliable. Остановите первый launch через Ctrl+C и запустите:
+
+```bash
+ros2 launch course_bringup patrol.launch.py \
+  namespace:=robot_a subscriber_reliability:=best_effort record:=false
+```
+
+Теперь сообщение приходит:
+
+```bash
+ros2 topic echo /robot_a/sensor_pose --qos-reliability best_effort --once
+```
+
+Чтобы записать новую демонстрацию, перезапустите launch с `record:=true`
+и новым, ещё не существующим каталогом `bag_dir`, например:
+
+```bash
+ros2 launch course_bringup patrol.launch.py \
+  namespace:=robot_a subscriber_reliability:=best_effort \
+  record:=true bag_dir:=/tmp/pr05-demo-bag
+```
+
+При record=false recorder не запускается: используется IfCondition.
+После Ctrl+C запись завершается и создаётся metadata.yaml.
+Готовая проверенная запись уже лежит в `evidence/pr05/bag`.
+
+Для replay остановите живой launch целиком, затем в первом терминале:
+
+```bash
+ros2 bag play evidence/pr05/bag --loop \
+  --qos-profile-overrides-path config/qos-overrides.yaml
+```
+
+Во втором повторите оба профиля на этой же записи:
+
+```bash
+timeout --signal=INT 4s ros2 topic echo /robot_a/sensor_pose \
+  --qos-reliability reliable --once
+ros2 topic echo /robot_a/sensor_pose --qos-reliability best_effort --once
+ros2 bag info evidence/pr05/bag
+```
+
+При replay rosbag публикует сохранённую позу; запуск черепахи не требуется.
+Файл config/qos-overrides.yaml задаёт издателю replay best_effort.
+Один bag содержит один поток /robot_a/sensor_pose. Версии кода и аргументы
+запуска записаны в отчёте и логах отдельно от MCAP.
+
+Автоматический опыт `python3 tools/check_pr05_runtime.py` использует
+изолированный ROS_DOMAIN_ID=118 и offscreen turtlesim. Он отказывается
+перезаписывать уже существующую запись: перед новым опытом сохраните
+или переименуйте предыдущую. Реальные доказательства: evidence/pr05/.
+
+Проверка отчёта:
+
+```bash
+python3 .course-kit/v1/tools/check_practice.py PR05 --submission .
+```
