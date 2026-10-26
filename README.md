@@ -285,3 +285,51 @@ ros2 bag info evidence/pr05/bag
 ```bash
 python3 .course-kit/v1/tools/check_practice.py PR05 --submission .
 ```
+
+## ПР06 — модель, координаты и QoS tf
+
+Пакет `course_description`, Xacro: `src/course_description/urdf/vehicle.urdf.xacro`.
+Размеры взяты из course kit v1-w08: база 0.8 м, колея 0.62 м, радиус 0.12 м.
+Оси REP-103: x вперёд, y влево, z вверх. Ветку `pr06-defect` использовать
+только для демонстрации: у лидара неверный parent `camera_link`.
+
+```bash
+cd ~/robotics_ws
+git switch pr06
+source /opt/ros/jazzy/setup.bash
+colcon build --symlink-install --packages-select course_description
+source install/setup.bash
+export ROS_DOMAIN_ID=16
+ros2 launch course_description display.launch.py
+```
+
+RViz: Fixed Frame=`base_link`, RobotModel и TF уже включены конфигурацией.
+Фиксированные сенсоры видны сразу. Для колёс и рулевых звеньев во втором
+терминале с тем же окружением опубликуйте положения:
+
+```bash
+ros2 topic pub -r 10 /joint_states sensor_msgs/msg/JointState \
+  '{header: auto, name: [front_left_steering_joint, front_right_steering_joint, front_left_wheel_joint, front_right_wheel_joint, rear_left_wheel_joint, rear_right_wheel_joint], position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}'
+ros2 run tf2_ros tf2_echo base_link lidar_link
+```
+
+Остановите публикацию через Ctrl+C перед следующей командой. Ожидаемое
+положение лидара: `(0.28, 0, 0.38)` м. На дефектной ветке offset складывается
+с offset камеры и даёт `(0.56, 0, 0.76)`. `check_urdf` принимает оба дерева,
+а `test_sensor_parents` обнаруживает смысловую ошибку.
+
+```bash
+ros2 topic info /tf_static --verbose
+ros2 topic echo /tf_static --once --qos-durability transient_local --qos-reliability reliable
+timeout 4 ros2 topic echo /tf_static --once --qos-durability volatile --qos-reliability reliable
+# Последняя команда завершается с 124: поздний volatile не читает историю.
+xacro src/course_description/urdf/vehicle.urdf.xacro > /tmp/vehicle.urdf
+check_urdf /tmp/vehicle.urdf
+colcon test --packages-select course_description
+colcon test-result --test-result-base build/course_description --verbose
+python3 .course-kit/v1/tools/check_practice.py PR06 --submission .
+```
+
+Полный повтор эксперимента с остановленными пользовательскими launch:
+`python3 tools/check_pr06_runtime.py` (отдельный домен 119, перезаписывает
+только evidence ПР06). Результаты: `evidence/pr06/`.
