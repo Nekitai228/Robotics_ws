@@ -28,7 +28,7 @@
     </joint>
   </xacro:macro>
   <xacro:sensor name="camera"/>
-  <xacro:sensor name="lidar"/>
+  <xacro:sensor name="lidar" parent="camera_link"/>
   <xacro:sensor name="imu"/>
   <xacro:macro name="wheel" params="name parent joint_x joint_y">
     <link name="${name}_wheel">
