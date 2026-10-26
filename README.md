@@ -333,3 +333,108 @@ python3 .course-kit/v1/tools/check_practice.py PR06 --submission .
 Полный повтор эксперимента с остановленными пользовательскими launch:
 `python3 tools/check_pr06_runtime.py` (отдельный домен 119, перезаписывает
 только evidence ПР06). Результаты: `evidence/pr06/`.
+
+## ПР07 — Gazebo, мост и адаптеры
+
+Исходный мир и модель скопированы из официального kit v1-w08, SHA256 и
+изменения перечислены в `src/course_simulation/KIT_VERSION`. Модель содержит
+одного робота; дополнительный spawn не нужен. IMU изменён со 100 на 50 Гц.
+Используется установленная Ubuntu 24.04 / ROS 2 Jazzy / Gazebo Harmonic 8.15.0;
+новый нормативный baseline kit Lyrical/Jetty здесь не запускался.
+
+### Сборка и запуск
+
+```bash
+cd ~/robotics_ws
+git switch pr07
+source /opt/ros/jazzy/setup.bash
+colcon build --symlink-install --packages-up-to course_simulation
+source install/setup.bash
+export ROS_DOMAIN_ID=16
+ros2 launch course_simulation simulation.launch.py headless:=true namespace:=robot_a
+```
+
+Launch остаётся активным. В нём один Gazebo, один мост, robot_state_publisher,
+drive_adapter и odom_adapter. Ресурсы берутся из установленного share, путь к
+моделям добавляется автоматически с сохранением GZ_SIM_RESOURCE_PATH.
+`headless:=true` передаёт `-s -r --headless-rendering` для OGRE2/EGL.
+Для программного рендеринга при проблемах GPU перед launch можно выполнить:
+
+```bash
+export LIBGL_ALWAYS_SOFTWARE=1
+export EGL_PLATFORM=surfaceless
+```
+
+Во втором терминале подключите те же source и ROS_DOMAIN_ID, затем:
+
+```bash
+ros2 topic echo /clock --once
+ros2 topic info /vehicle/imu --verbose
+ros2 topic echo /vehicle/scan --once --field header --qos-reliability best_effort
+ros2 run course_simulation test_drive --ros-args -p use_sim_time:=true -p speed:=0.3 -p steering:=0.15
+```
+
+Источник test_drive публикует свежий stamp из /clock. Ctrl+C останавливает
+источник; через 0.25 с симуляционного времени watchdog выдаёт нулевой Twist.
+Чтобы явно отправлять нулевую команду, запустите тот же источник с speed:=0.0.
+В третьем терминале, пока источник работает:
+
+```bash
+ros2 topic echo /vehicle/gz_cmd_vel --once
+gz topic -e -t /model/course_ackermann/cmd_vel -n 1
+ros2 topic echo /vehicle/odom --once
+ros2 run tf2_ros tf2_echo odom base_link --ros-args -p use_sim_time:=true
+```
+
+Для speed=0.3 и steering=0.15 ожидаются linear.x=0.3 и
+angular.z=0.3*tan(0.15)/0.8. Адаптер ограничивает скорость [0,1.2], угол
+[-0.45,0.45]; нечисловая или старая команда немедленно сбрасывает выход и
+сохранённую команду. /drive/raw не связан с мостом.
+
+### Дефект и владельцы tf
+
+Остановите исправный launch, затем запустите один экземпляр с копией YAML:
+
+```bash
+ros2 launch course_simulation simulation.launch.py headless:=true \
+  bridge_config:=$PWD/src/course_simulation/config/bridge-defect.yaml
+```
+
+В нём опечатка /vehicle/imu_typo на стороне Gazebo. `ros2 topic info -v
+/vehicle/imu` всё ещё показывает издателя; `timeout 4 ros2 topic echo
+/vehicle/imu --once --qos-reliability best_effort` завершается с 124.
+При этом `gz topic -e -t /vehicle/imu -n 1` читает исходный сенсор.
+После Ctrl+C перезапустите обычный launch с bridge.yaml. Второй мост
+одновременно не запускайте.
+
+Исходная одометрия: /vehicle/odom_gz, course_ackermann/odom →
+course_ackermann/base_link. Единственный odom_adapter сохраняет stamp, pose,
+twist и covariance, меняет frames на odom → base_link, публикует /vehicle/odom
+и совпадающий /tf. robot_state_publisher владеет фиксированными связями сенсоров;
+динамические колёсные связи публикуются им только при joint_states. Наличие
+двух издателей топика /tf допустимо: у каждого ребра один владелец.
+
+### Запись для ПР08 и проверки
+
+Готовая проверенная запись сохранена локально в fixtures/pr07-sensors.
+Её MCAP исключён из Git; метаданные, число сообщений и SHA256 находятся в
+evidence/pr07. Используйте этот bag для ПР08 без повторного odom_adapter.
+Для новой записи задайте другой, ещё не существующий каталог:
+
+```bash
+ros2 bag record -s mcap --use-sim-time -o /tmp/pr07-demo-bag --topics \
+  /vehicle/camera/image_raw /vehicle/scan /vehicle/imu /vehicle/odom /tf /tf_static /clock
+# Через >=30 секунд именно симуляционного времени: Ctrl+C, затем
+ros2 bag info /tmp/pr07-demo-bag
+colcon test --packages-select course_simulation
+colcon test-result --test-result-base build/course_simulation --verbose
+python3 .course-kit/v1/tools/check_practice.py PR07 --submission .
+```
+
+Скрипт `python3 tools/check_pr07_runtime.py` повторяет реальный эксперимент
+в домене 120 и отдельном GZ_PARTITION, проверяет путь команды и физическую
+позу корпуса, QoS, отказы, tf и записывает >=30 секунд симуляции. Он отказывается
+перезаписывать существующий fixtures/pr07-sensors. Сначала сохраните старый
+каталог под другим именем, если действительно требуется повторить запись.
+Измеренные частоты сравниваются с update_rate через stamp и real-time factor;
+частоты по часам компьютера зависят от рендера и нагрузки.

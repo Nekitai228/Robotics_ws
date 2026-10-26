@@ -1,0 +1,6 @@
+v1-w08
+archive_sha256=aea8efd0a51668af63f2e475b82bfa28bd76c21f20d8afea6b136d43a56a88fb
+archive_url=https://ros.lms.ci.nsu.ru/downloads/robotics-course-kit-v1-w08-aea8efd0a516.tar.gz
+Local change: IMU update_rate 100 -> 50 Hz; bridge odom -> odom_gz; explicit QoS.
+Actual environment: Ubuntu 24.04 / ROS 2 Jazzy / Gazebo Harmonic 8.15.0.
+Kit baseline: Ubuntu 26.04 / ROS 2 Lyrical / Gazebo Jetty.

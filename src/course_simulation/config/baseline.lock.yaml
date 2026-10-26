@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "selected": {
+    "ubuntu": "26.04",
+    "ros": "lyrical",
+    "gazebo": "jetty",
+    "ros_gz_install": "ros-lyrical-ros-gz"
+  }
+}

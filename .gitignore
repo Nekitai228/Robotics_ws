@@ -24,3 +24,6 @@ robotics-course-kit-*.sha256.txt
 build/
 install/
 log/
+
+# Large immutable local fixture for PR08
+fixtures/pr07-sensors/
