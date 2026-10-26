@@ -1,0 +1,122 @@
+[INFO] [launch]: All log files can be found below /home/iakup/.ros/log/2026-10-26-17-33-04-391558-notebook-1540
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gz-1]: process started with pid [1543]
+[INFO] [robot_state_publisher-2]: process started with pid [1544]
+[INFO] [parameter_bridge-3]: process started with pid [1545]
+[INFO] [drive_adapter-4]: process started with pid [1546]
+[INFO] [odom_adapter-5]: process started with pid [1547]
+[robot_state_publisher-2] [WARN] [1793010784.736420127] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[robot_state_publisher-2] [INFO] [1793010784.736801713] [robot_a.robot_state_publisher]: Robot initialized
+[gz-1] [1;32m[Msg] [0m[1;32mGazebo Sim Server v[0m[1;32m8.15.0[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mLoading SDF world file[[0m[1;32m/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/worlds/mcity-minimal.sdf[0m[1;32m].[0m
+[gz-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="course_ackermann"]/link[@name="camera_link"]/sensor[@name="front_camera"]/frame_id:/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/models/course_ackermann/model.sdf:L87]: XML Element[frame_id], child of element[sensor], not defined in SDF. Copying[frame_id] as children of [sensor].
+[gz-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="course_ackermann"]/link[@name="camera_link"]/sensor[@name="front_camera"]/gz_frame_id:/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/models/course_ackermann/model.sdf:L88]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="course_ackermann"]/link[@name="lidar_link"]/sensor[@name="lidar"]/frame_id:/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/models/course_ackermann/model.sdf:L99]: XML Element[frame_id], child of element[sensor], not defined in SDF. Copying[frame_id] as children of [sensor].
+[gz-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="course_ackermann"]/link[@name="lidar_link"]/sensor[@name="lidar"]/gz_frame_id:/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/models/course_ackermann/model.sdf:L100]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="course_ackermann"]/link[@name="imu_link"]/sensor[@name="imu"]/frame_id:/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/models/course_ackermann/model.sdf:L110]: XML Element[frame_id], child of element[sensor], not defined in SDF. Copying[frame_id] as children of [sensor].
+[gz-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="course_ackermann"]/link[@name="imu_link"]/sensor[@name="imu"]/gz_frame_id:/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/models/course_ackermann/model.sdf:L110]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gz-1] [1;32m[Msg] [0m[1;32mServing entity system service on [[0m[1;32m/[0m[1;32mentity/system/add[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mCreate[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/create_multiple[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mCreate[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/create_multiple/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mRemove[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/remove[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mRemove[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/remove/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_pose[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_pose/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_pose_vector[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_pose_vector/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mLight configuration[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/light_config[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mLight configuration[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/light_config/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPhysics[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_physics[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPhysics[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_physics/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mSphericalCoordinates[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_spherical_coordinates[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mSphericalCoordinates[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/set_spherical_coordinates/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mEnable collision[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/enable_collision[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mEnable collision[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/enable_collision/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mDisable collision[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/disable_collision[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mDisable collision[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/disable_collision/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/visual_config[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/visual_config/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/wheel_slip[0m[1;32m] (async)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/mcity_minimal/wheel_slip/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mAckermannSteering subscribing to twist messages on [[0m[1;32m/model/course_ackermann/cmd_vel[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mLoaded level [[0m[1;32mdefault[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing world controls on [[0m[1;32m/world/mcity_minimal[0m[1;32m/control], [[0m[1;32m/world/mcity_minimal[0m[1;32m/control/state] and [[0m[1;32m/world/mcity_minimal[0m[1;32m/playback/control][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing GUI information on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mgui/info[0m[1;32m][0m[1;32m[0m
+[parameter_bridge-3] [INFO] [1793010785.801509755] [robot_a.bridge]: Creating ROS->GZ Bridge: [/vehicle/gz_cmd_vel (geometry_msgs/msg/Twist) -> /model/course_ackermann/cmd_vel (gz.msgs.Twist)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1793010785.807654315] [robot_a.bridge]: Creating GZ->ROS Bridge: [/model/course_ackermann/odometry (gz.msgs.Odometry) -> /vehicle/odom_gz (nav_msgs/msg/Odometry)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1793010785.812839672] [robot_a.bridge]: Creating GZ->ROS Bridge: [/vehicle/scan (gz.msgs.LaserScan) -> /vehicle/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1793010785.817927862] [robot_a.bridge]: Creating GZ->ROS Bridge: [/vehicle/imu (gz.msgs.IMU) -> /vehicle/imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1793010785.820537844] [robot_a.bridge]: Creating GZ->ROS Bridge: [/vehicle/camera/image_raw (gz.msgs.Image) -> /vehicle/camera/image_raw (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-3] [INFO] [1793010785.823196979] [robot_a.bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[gz-1] [1;33m[Wrn] [Ogre2Camera.cc:423] [0m[1;33mOgre2Camera::SetVisibilityMask: Mask bits [0m[1;33mc0000000[0m[1;33m are set but will be ignored as they conflict with the [0m[1;33mreserved bits used internally by the ogre2 backend.[0m[1;33m[0m
+[parameter_bridge-3] [INFO] [1793010788.401375615] [robot_a.bridge]: Passing message from ROS geometry_msgs/msg/Twist to Gazebo gz.msgs.Twist (showing msg only once per type)
+[drive_adapter-4] [INFO] [1793010788.473094273] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010825.764737934] [robot_a.drive_adapter]: drive: ok
+[drive_adapter-4] [INFO] [1793010839.323529098] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010839.405802836] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010839.408869818] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010839.495086132] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010839.499756313] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010839.575718285] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010839.587688959] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010839.668322034] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010839.674517516] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010839.758075032] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010839.765067645] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010839.849536017] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010839.861309797] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010839.929682868] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010839.936544402] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010840.020319220] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.023751530] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.107462919] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.116859549] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.189543458] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.194767483] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.267581860] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.273690275] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.351106463] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.358346271] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.427888224] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.435185400] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.509426671] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.514342644] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.581641036] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.587555884] [robot_a.drive_adapter]: drive: non_finite
+[drive_adapter-4] [INFO] [1793010840.661036878] [robot_a.drive_adapter]: drive: no_command
+[drive_adapter-4] [INFO] [1793010840.666834414] [robot_a.drive_adapter]: drive: ok
+[drive_adapter-4] [INFO] [1793010841.670089071] [robot_a.drive_adapter]: drive: stale
+[drive_adapter-4] [INFO] [1793010841.756666419] [robot_a.drive_adapter]: drive: no_command
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [odom_adapter-5]: sending signal 'SIGINT' to process[odom_adapter-5]
+[INFO] [drive_adapter-4]: sending signal 'SIGINT' to process[drive_adapter-4]
+[INFO] [parameter_bridge-3]: sending signal 'SIGINT' to process[parameter_bridge-3]
+[INFO] [robot_state_publisher-2]: sending signal 'SIGINT' to process[robot_state_publisher-2]
+[INFO] [gz-1]: sending signal 'SIGINT' to process[gz-1]
+[parameter_bridge-3] [INFO] [1793010865.842617436] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-2] [INFO] [1793010865.846673548] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [parameter_bridge-3]: process has finished cleanly [pid 1545]
+[INFO] [robot_state_publisher-2]: process has finished cleanly [pid 1544]
+[gz-1] [1;32m[Msg] [0m[1;32mWorld [[0m[1;32mmcity_minimal[0m[1;32m] initialized with [[0m[1;32mstep[0m[1;32m] physics profile.[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing world SDF generation service on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mgenerate_world_sdf[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing world names on [[0m[1;32m/gazebo/worlds[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mResource path add service on [[0m[1;32m/gazebo/resource_paths/add[0m[1;32m].[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mResource path get service on [[0m[1;32m/gazebo/resource_paths/get[0m[1;32m].[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mResource path resolve service on [[0m[1;32m/gazebo/resource_paths/resolve[0m[1;32m].[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mResource paths published on [[0m[1;32m/gazebo/resource_paths[0m[1;32m].[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServer control service on [[0m[1;32m/server_control[0m[1;32m].[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mFound no publishers on /stats, adding root stats topic[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mFound no publishers on /clock, adding root clock topic[0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mLoading plugin [[0m[1;32mgz-rendering-ogre2[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing scene information on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mscene/info[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing graph information on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mscene/graph[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing full state on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mstate[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mServing full state (async) on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mstate_async[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPublishing scene information on [[0m[1;32m/world/mcity_minimal/scene/info[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPublishing entity deletions on [[0m[1;32m/world/mcity_minimal/scene/deletion[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPublishing state changes on [[0m[1;32m/world/mcity_minimal/state[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPublishing pose messages on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mpose/info[0m[1;32m][0m[1;32m[0m
+[gz-1] [1;32m[Msg] [0m[1;32mPublishing dynamic pose messages on [[0m[1;32m/world/mcity_minimal[0m[1;32m/[0m[1;32mdynamic_pose/info[0m[1;32m][0m[1;32m[0m
+[INFO] [gz-1]: process has finished cleanly [pid 1543]
+[INFO] [drive_adapter-4]: process has finished cleanly [pid 1546]
+[INFO] [odom_adapter-5]: process has finished cleanly [pid 1547]

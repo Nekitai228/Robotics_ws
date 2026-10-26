@@ -1,0 +1,42 @@
+
+== Система ==
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+VERSION_CODENAME=noble
+архитектура=x86_64
+ядро=6.18.54.1-microsoft-standard-WSL2
+назначенная оболочка=/bin/bash
+текущая оболочка=bash
+
+== Инструменты ==
+GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-gnu)
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+git version 2.43.0
+[не найдено] fish
+[не найдено] uv
+[не найдено] code
+[не найдено] docker
+
+== ROS 2 ==
+ROS_DISTRO=jazzy
+ROS_DOMAIN_ID=<не задано>
+ros2=/opt/ros/jazzy/bin/ros2
+/opt/ros/jazzy
+
+== Графические адаптеры и драйверы ==
+[не найдено] lspci; установите pciutils
+
+== OpenGL renderer ==
+direct rendering: Yes
+OpenGL vendor string: Mesa
+OpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)
+OpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4
+
+== Vulkan ==
+[не найдено] vulkaninfo; установите vulkan-tools
+
+== NVIDIA ==
+NVIDIA GeForce RTX 3050 Laptop GPU, 595.97
+
+Отчёт завершён. Перед публикацией просмотрите его вручную.
+Note: Windows PATH entries excluded to avoid starting VS Code Server installation from code --version.

@@ -1,0 +1,8 @@
+{
+  "path": "fixtures/pr07-sensors",
+  "duration_sim_s": 32.935,
+  "files": {
+    "metadata.yaml": "9bfa29a7a050391703e94e8d72d3a5bf83783c8fe40e60e7cc078f86a4cefbc5",
+    "pr07-sensors_0.mcap": "6829d769326e7d260a89487b2954b15ddc3e3f723d853dbd03f262a5e63a3403"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "sensors": [
+    {
+      "topic": "/vehicle/camera/image_raw",
+      "type": "sensor_msgs/msg/Image",
+      "frame_id": "camera_link",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 20,
+      "measured_wall_hz": 13.145331524181458,
+      "measured_sim_hz": 19.409631906676125,
+      "observed_messages": 986
+    },
+    {
+      "topic": "/vehicle/scan",
+      "type": "sensor_msgs/msg/LaserScan",
+      "frame_id": "lidar_link",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 10,
+      "measured_wall_hz": 6.778018863472993,
+      "measured_sim_hz": 10.000394492879403,
+      "observed_messages": 508
+    },
+    {
+      "topic": "/vehicle/imu",
+      "type": "sensor_msgs/msg/Imu",
+      "frame_id": "imu_link",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 50,
+      "measured_wall_hz": 33.299764562020236,
+      "measured_sim_hz": 49.98129884446544,
+      "observed_messages": 2540
+    },
+    {
+      "topic": "/vehicle/odom_gz",
+      "type": "nav_msgs/msg/Odometry",
+      "frame_id": "course_ackermann/odom",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 50,
+      "measured_wall_hz": 33.923214709204785,
+      "measured_sim_hz": 50.00000000000001,
+      "observed_messages": 2540,
+      "child_frame_id": "course_ackermann/base_link"
+    },
+    {
+      "topic": "/vehicle/odom",
+      "type": "nav_msgs/msg/Odometry",
+      "frame_id": "odom",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 50,
+      "measured_wall_hz": 33.916640419831936,
+      "measured_sim_hz": 50.0,
+      "observed_messages": 2539,
+      "child_frame_id": "base_link"
+    }
+  ],
+  "imu_parameter_change": {
+    "before_hz": 100,
+    "after_hz": 50
+  },
+  "real_time_factor": 0.6776779672215686,
+  "physical_distance_m": 2.416124834154676,
+  "odometry_distance_m": 2.4236032835941876,
+  "bag_duration_sim_s": 32.935,
+  "bag_topic_counts": {
+    "/vehicle/odom": 1614,
+    "/vehicle/scan": 328,
+    "/vehicle/imu": 1635,
+    "/tf_static": 1,
+    "/vehicle/camera/image_raw": 624,
+    "/tf": 1617,
+    "/clock": 32770
+  },
+  "frequency_explanation": "Software OGRE2/EGL rendering and concurrent capture/CLI load lower wall-clock rates. Compare update_rate to stamp-based simulation rates; wall rates are approximately simulation rates times measured real-time factor.",
+  "environment": "WSL2 Ubuntu 24.04 / Jazzy / Harmonic 8.15.0; adapted from kit Lyrical/Jetty baseline",
+  "wheel_check": {
+    "steering_left_rad": 0.15914738286623592,
+    "front_left_wheel_roll_delta_quaternion": [
+      -5.1584350042475565e-11,
+      0.1588744221374668,
+      -3.2056306220606956e-10,
+      0.9872987987385001
+    ],
+    "rear_left_wheel_roll_delta_quaternion": [
+      5.551115123423262e-17,
+      0.15887441819017395,
+      0.0,
+      0.9872987993736921
+    ],
+    "steering_right_rad": 0.14178516995692625,
+    "front_right_wheel_roll_delta_quaternion": [
+      -3.1764487329081196e-10,
+      0.9783110434211116,
+      -6.72560895864649e-11,
+      0.2071412617522052
+    ],
+    "rear_right_wheel_roll_delta_quaternion": [
+      -2.775557560376415e-17,
+      0.9783110427018795,
+      0.0,
+      0.20714126514907993
+    ]
+  }
+}

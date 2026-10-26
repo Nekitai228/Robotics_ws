@@ -1,0 +1,105 @@
+$ ros2 launch course_simulation simulation.launch.py headless:=true bridge_config:=/home/iakup/robotics_ws/src/course_simulation/config/bridge-defect.yaml
+$ ros2 topic info -v /vehicle/imu
+$ gz topic -i -t /vehicle/imu
+$ gz topic -e -t /vehicle/imu -n 1
+$ ros2 topic echo /vehicle/imu --once --qos-reliability best_effort
+$ ros2 launch course_simulation simulation.launch.py headless:=true
+$ ros2 node list --no-daemon --spin-time 1
+$ ros2 topic info -v /vehicle/camera/image_raw
+$ ros2 topic info -v /vehicle/scan
+$ ros2 topic info -v /vehicle/imu
+$ ros2 topic info -v /vehicle/odom_gz
+$ ros2 topic info -v /vehicle/odom
+$ ros2 topic info -v /vehicle/gz_cmd_vel
+$ ros2 topic info -v /tf
+$ ros2 topic info -v /tf_static
+$ ros2 topic echo /clock --once
+$ ros2 bag record -s mcap --use-sim-time --disable-keyboard-controls -o /home/iakup/robotics_ws/fixtures/pr07-sensors --topics /vehicle/camera/image_raw /vehicle/scan /vehicle/imu /vehicle/odom /tf /tf_static /clock
+$ ros2 topic hz /vehicle/camera/image_raw
+$ ros2 topic hz /vehicle/scan
+$ ros2 topic hz /vehicle/imu
+$ gz topic -e -t /world/mcity_minimal/dynamic_pose/info -n 1 --json-output
+$ ros2 topic echo /vehicle/gz_cmd_vel --once
+$ gz topic -i -t /model/course_ackermann/cmd_vel
+$ gz topic -e -t /model/course_ackermann/cmd_vel -n 1 --json-output
+$ gz topic -e -t /world/mcity_minimal/dynamic_pose/info -n 1 --json-output
+Recorded 20.0 simulation seconds
+Recorded 25.1 simulation seconds
+Recorded 30.2 simulation seconds
+$ ros2 bag info /home/iakup/robotics_ws/fixtures/pr07-sensors
+{
+  "sensors": [
+    {
+      "topic": "/vehicle/camera/image_raw",
+      "type": "sensor_msgs/msg/Image",
+      "frame_id": "camera_link",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 20,
+      "measured_wall_hz": 13.145331524181458,
+      "measured_sim_hz": 19.409631906676125,
+      "observed_messages": 986
+    },
+    {
+      "topic": "/vehicle/scan",
+      "type": "sensor_msgs/msg/LaserScan",
+      "frame_id": "lidar_link",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 10,
+      "measured_wall_hz": 6.778018863472993,
+      "measured_sim_hz": 10.000394492879403,
+      "observed_messages": 508
+    },
+    {
+      "topic": "/vehicle/imu",
+      "type": "sensor_msgs/msg/Imu",
+      "frame_id": "imu_link",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 50,
+      "measured_wall_hz": 33.299764562020236,
+      "measured_sim_hz": 49.98129884446544,
+      "observed_messages": 2540
+    },
+    {
+      "topic": "/vehicle/odom_gz",
+      "type": "nav_msgs/msg/Odometry",
+      "frame_id": "course_ackermann/odom",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 50,
+      "measured_wall_hz": 33.923214709204785,
+      "measured_sim_hz": 50.00000000000001,
+      "observed_messages": 2540,
+      "child_frame_id": "course_ackermann/base_link"
+    },
+    {
+      "topic": "/vehicle/odom",
+      "type": "nav_msgs/msg/Odometry",
+      "frame_id": "odom",
+      "source_time": "/clock (Gazebo simulation)",
+      "declared_hz": 50,
+      "measured_wall_hz": 33.916640419831936,
+      "measured_sim_hz": 50.0,
+      "observed_messages": 2539,
+      "child_frame_id": "base_link"
+    }
+  ],
+  "imu_parameter_change": {
+    "before_hz": 100,
+    "after_hz": 50
+  },
+  "real_time_factor": 0.6776779672215686,
+  "physical_distance_m": 2.416124834154676,
+  "odometry_distance_m": 2.4236032835941876,
+  "bag_duration_sim_s": 32.935,
+  "bag_topic_counts": {
+    "/vehicle/odom": 1614,
+    "/vehicle/scan": 328,
+    "/vehicle/imu": 1635,
+    "/tf_static": 1,
+    "/vehicle/camera/image_raw": 624,
+    "/tf": 1617,
+    "/clock": 32770
+  },
+  "frequency_explanation": "Software OGRE2/EGL rendering and concurrent capture/CLI load lower wall-clock rates. Compare update_rate to stamp-based simulation rates; wall rates are approximately simulation rates times measured real-time factor.",
+  "environment": "WSL2 Ubuntu 24.04 / Jazzy / Harmonic 8.15.0; adapted from kit Lyrical/Jetty baseline"
+}
+PR07 runtime checks passed

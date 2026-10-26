@@ -1,0 +1,17 @@
+Arguments (pass arguments as '<name>:=<value>'):
+
+    'world':
+        no description given
+        (default: '/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/worlds/mcity-minimal.sdf')
+
+    'bridge_config':
+        no description given
+        (default: '/home/iakup/robotics_ws/install/course_simulation/share/course_simulation/config/bridge.yaml')
+
+    'headless':
+        One of: ['true', 'false']
+        (default: 'true')
+
+    'namespace':
+        no description given
+        (default: 'robot_a')

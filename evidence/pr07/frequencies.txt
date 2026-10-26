@@ -1,0 +1,10 @@
+$ ros2 topic hz /vehicle/camera/image_raw
+
+exit=124
+$ ros2 topic hz /vehicle/scan
+
+exit=124
+$ ros2 topic hz /vehicle/imu
+WARNING: topic [/vehicle/imu] does not appear to be published yet
+
+exit=124

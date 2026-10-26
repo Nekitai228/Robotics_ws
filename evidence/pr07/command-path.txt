@@ -1,0 +1,26 @@
+$ ros2 topic echo /vehicle/gz_cmd_vel --once
+A message was lost!!!
+	total count change:1
+	total count: 1---
+linear:
+  x: 0.30000001192092896
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.05667571131018069
+---
+
+exit=0
+$ gz topic -i -t /model/course_ackermann/cmd_vel
+Publishers [Address, Message Type]:
+  tcp://172.29.159.161:35455, gz.msgs.Twist
+Subscribers [Address, Message Type]:
+  tcp://172.29.159.161:39299, gz.msgs.Twist
+
+exit=0
+$ gz topic -e -t /model/course_ackermann/cmd_vel -n 1 --json-output
+{"linear":{"x":0.30000001192092896},"angular":{"z":0.05667571131018069}}
+
+exit=0

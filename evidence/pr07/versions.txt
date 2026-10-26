@@ -1,0 +1,4 @@
+8.15.0
+ros-jazzy-ackermann-msgs	2.0.2-6noble.20260911.101902
+ros-jazzy-robot-state-publisher	3.3.4-1noble.20260915.184559
+ros-jazzy-ros-gz-bridge	1.0.24-1noble.20260920.234644

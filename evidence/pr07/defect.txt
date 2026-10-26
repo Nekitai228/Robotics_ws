@@ -1,0 +1,116 @@
+$ ros2 topic info -v /vehicle/imu
+Type: sensor_msgs/msg/Imu
+
+Publisher count: 1
+
+Node name: bridge
+Node namespace: /robot_a
+Topic type: sensor_msgs/msg/Imu
+Topic type hash: RIHS01_7d9a00ff131080897a5ec7e26e315954b8eae3353c3f995c55faf71574000b5b
+Endpoint type: PUBLISHER
+GID: 01.0f.a3.ab.ef.04.17.a6.00.00.00.00.00.00.18.03
+QoS profile:
+  Reliability: BEST_EFFORT
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+Subscription count: 1
+
+Node name: pr07_probe
+Node namespace: /
+Topic type: sensor_msgs/msg/Imu
+Topic type hash: RIHS01_7d9a00ff131080897a5ec7e26e315954b8eae3353c3f995c55faf71574000b5b
+Endpoint type: SUBSCRIPTION
+GID: 01.0f.a3.ab.d9.04.1d.b5.00.00.00.00.00.00.17.04
+QoS profile:
+  Reliability: BEST_EFFORT
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+
+exit=0
+$ gz topic -i -t /vehicle/imu
+Publishers [Address, Message Type]:
+  tcp://172.29.159.161:41043, gz.msgs.IMU
+No subscribers on topic [/vehicle/imu]
+
+exit=0
+$ gz topic -e -t /vehicle/imu -n 1
+header {
+  stamp {
+    sec: 3
+    nsec: 820000000
+  }
+  data {
+    key: "frame_id"
+    value: "imu_link"
+  }
+  data {
+    key: "seq"
+    value: "1"
+  }
+}
+entity_name: "course_ackermann::imu_link::imu"
+orientation {
+  x: 3.9607049866956106e-10
+  y: 1.0018644008559053e-10
+  z: -1.8519565262051063e-13
+  w: 1
+}
+orientation_covariance {
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+}
+angular_velocity {
+  x: 1.5538736907454706e-12
+  y: -3.796706829198823e-13
+  z: -6.9477658561186352e-15
+}
+angular_velocity_covariance {
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+}
+linear_acceleration {
+  x: -1.6135138074258846e-09
+  y: 7.0906078207867323e-09
+  z: 9.8100000001668839
+}
+linear_acceleration_covariance {
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+  data: 0
+}
+
+
+exit=0
+$ ros2 topic echo /vehicle/imu --once --qos-reliability best_effort
+
+exit=124

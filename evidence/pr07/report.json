@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR07",
+  "commit": "7dcb28ad3436d38cfdd54606745c1eda73e4ceda",
+  "course_kit": {
+    "version": "v1-w08",
+    "archive_sha256": "aea8efd0a51668af63f2e475b82bfa28bd76c21f20d8afea6b136d43a56a88fb",
+    "archive_url": "https://ros.lms.ci.nsu.ru/downloads/robotics-course-kit-v1-w08-aea8efd0a516.tar.gz"
+  },
+  "commands": [
+    "colcon build --symlink-install --packages-up-to course_simulation",
+    "gz sdf -k src/course_simulation/models/course_ackermann/model.sdf",
+    "colcon test --packages-select course_simulation --event-handlers console_direct+",
+    "colcon test --event-handlers console_direct+",
+    "colcon test-result --verbose",
+    "python3 tools/check_pr07_runtime.py",
+    "ros2 bag info fixtures/pr07-sensors",
+    "python3 /tmp/pr07-check-bag.py",
+    "python3 .course-kit/v1/tools/check_practice.py PR07 --submission ."
+  ],
+  "tests": [
+    {"name": "SDF validation and installed launch arguments", "status": "passed"},
+    {"name": "38 package tests passed", "status": "passed"},
+    {"name": "Workspace: 90 tests, 0 errors, 0 failures, 3 skipped", "status": "passed"},
+    {"name": "IMU typo reproduced and fixed with one bridge", "status": "passed"},
+    {"name": "Live frames, offered QoS and measured frequencies", "status": "passed"},
+    {"name": "Matching ROS/Gazebo commands and physical body/wheel motion", "status": "passed"},
+    {"name": "Live stale and NaN refusal; no raw command bypass", "status": "passed"},
+    {"name": "Preserved odometry and matching tf stamp/pose", "status": "passed"},
+    {"name": "MCAP read: 32.935 simulation seconds, seven nonempty topics", "status": "passed"}
+  ],
+  "defect": {
+    "reproducer": "Launch with config/bridge-defect.yaml; compare ROS info, timed echo and gz topic for IMU.",
+    "root_cause": "The Gazebo source is /vehicle/imu, but the bridge subscribes to /vehicle/imu_typo. A ROS publisher is visible without receiving source data.",
+    "proof_after": "Stop the defect launch and start normal bridge.yaml once. IMU arrives with imu_link and simulation stamps; headless runtime, seven-topic MCAP and physical motion checks pass."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true,
+    "headless_verified": true,
+    "recording_verified": true,
+    "odometry_tf_owned": true
+  },
+  "time": {"contact_academic_hours": 1, "self_study_hours": 1},
+  "ai_used": true
+}

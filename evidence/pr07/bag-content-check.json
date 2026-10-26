@@ -1,0 +1,64 @@
+{
+  "duration_sim_s": 32.935,
+  "counts_read_from_mcap": {
+    "/clock": 32770,
+    "/tf_static": 1,
+    "/vehicle/imu": 1635,
+    "/vehicle/scan": 328,
+    "/vehicle/camera/image_raw": 624,
+    "/vehicle/odom": 1614,
+    "/tf": 1617
+  },
+  "first_messages": {
+    "/clock": {
+      "type": "rosgraph_msgs/msg/Clock"
+    },
+    "/tf_static": {
+      "type": "tf2_msgs/msg/TFMessage",
+      "edges": [
+        [
+          "base_link",
+          "camera_link"
+        ],
+        [
+          "base_link",
+          "imu_link"
+        ],
+        [
+          "base_link",
+          "lidar_link"
+        ]
+      ]
+    },
+    "/vehicle/imu": {
+      "type": "sensor_msgs/msg/Imu",
+      "frame_id": "imu_link",
+      "stamp_sec": 16.44
+    },
+    "/vehicle/scan": {
+      "type": "sensor_msgs/msg/LaserScan",
+      "frame_id": "lidar_link",
+      "stamp_sec": 16.4
+    },
+    "/vehicle/camera/image_raw": {
+      "type": "sensor_msgs/msg/Image",
+      "frame_id": "camera_link",
+      "stamp_sec": 16.45
+    },
+    "/vehicle/odom": {
+      "type": "nav_msgs/msg/Odometry",
+      "frame_id": "odom",
+      "stamp_sec": 17.06,
+      "child_frame_id": "base_link"
+    },
+    "/tf": {
+      "type": "tf2_msgs/msg/TFMessage",
+      "edges": [
+        [
+          "odom",
+          "base_link"
+        ]
+      ]
+    }
+  }
+}
