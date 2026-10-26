@@ -1,0 +1,15 @@
+$ check_urdf /home/iakup/robotics_ws/evidence/pr06/defect.urdf
+$ python3 -m pytest -q src/course_description/test/test_geometry.py
+$ check_urdf /home/iakup/robotics_ws/evidence/pr06/fixed.urdf
+$ python3 -m pytest -q src/course_description/test/test_geometry.py
+$ ros2 topic info /tf_static --verbose
+$ ros2 topic echo /tf_static --once --qos-durability transient_local --qos-reliability reliable
+$ ros2 topic echo /tf_static --once --qos-durability volatile --qos-reliability reliable
+$ ros2 run tf2_ros tf2_echo base_link lidar_link
+$ ros2 run tf2_tools view_frames --output /home/iakup/robotics_ws/evidence/pr06/defect-frames
+$ ros2 topic info /tf_static --verbose
+$ ros2 topic echo /tf_static --once --qos-durability transient_local --qos-reliability reliable
+$ ros2 topic echo /tf_static --once --qos-durability volatile --qos-reliability reliable
+$ ros2 run tf2_ros tf2_echo base_link lidar_link
+$ ros2 run tf2_tools view_frames --output /home/iakup/robotics_ws/evidence/pr06/fixed-frames
+PR06 runtime checks passed

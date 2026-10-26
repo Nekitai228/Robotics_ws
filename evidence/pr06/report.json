@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "practice_id": "PR06",
+  "commit": "4c347ed729d72a2e5a8431c691fc4a2dddd4b3cb",
+  "course_kit": {
+    "version": "v1-w08",
+    "archive_sha256": "aea8efd0a51668af63f2e475b82bfa28bd76c21f20d8afea6b136d43a56a88fb",
+    "archive_url": "https://ros.lms.ci.nsu.ru/downloads/robotics-course-kit-v1-w08-aea8efd0a516.tar.gz"
+  },
+  "commands": [
+    "colcon build --symlink-install --packages-select course_description",
+    "colcon test --packages-select course_description --event-handlers console_direct+",
+    "colcon test-result --test-result-base build/course_description --verbose",
+    "python3 tools/check_pr06_runtime.py",
+    "python3 .course-kit/v1/tools/check_practice.py PR06 --submission ."
+  ],
+  "tests": [
+    {
+      "name": "Xacro expansion and check_urdf",
+      "status": "passed"
+    },
+    {
+      "name": "6 package tests, 0 failures",
+      "status": "passed"
+    },
+    {
+      "name": "Semantic parent failure on committed defect; passes after restoration",
+      "status": "passed"
+    },
+    {
+      "name": "tf2_echo and view_frames before/after",
+      "status": "passed"
+    },
+    {
+      "name": "Late transient_local receives; volatile times out with 124",
+      "status": "passed"
+    },
+    {
+      "name": "RViz launch and OpenGL initialization",
+      "status": "passed"
+    }
+  ],
+  "defect": {
+    "reproducer": "pr06-defect: camera_link becomes lidar parent with unchanged offset. Run check_pr06_runtime.py.",
+    "root_cause": "The unchanged relative offset is added to camera pose, doubling the sensor translation. Structural validity alone does not check intended geometry.",
+    "proof_after": "base_link is restored as parent; tf2_echo reports [0.280, 0.000, 0.380], all six tests pass. Actual before/after logs and trees are attached."
+  },
+  "claims": {
+    "public_tests_passed": true,
+    "defect_reproduced": true,
+    "defect_fixed": true
+  },
+  "time": {
+    "contact_academic_hours": 1,
+    "self_study_hours": 1
+  },
+  "ai_used": true
+}

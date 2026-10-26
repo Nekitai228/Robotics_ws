@@ -1,0 +1,64 @@
+Defect commit: 31b659ffb03e2b987cad9809470db4ef0e1a9e1b
+
+## defect
+$ check_urdf /home/iakup/robotics_ws/evidence/pr06/defect.urdf
+robot name is: course_ackermann
+---------- Successfully Parsed XML ---------------
+root Link: base_link has 6 child(ren)
+    child(1):  camera_link
+        child(1):  lidar_link
+    child(2):  front_left_knuckle
+        child(1):  front_left_wheel
+    child(3):  front_right_knuckle
+        child(1):  front_right_wheel
+    child(4):  imu_link
+    child(5):  rear_left_wheel
+    child(6):  rear_right_wheel
+
+exit=0
+$ python3 -m pytest -q src/course_description/test/test_geometry.py
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+_____________________________ test_sensor_parents ______________________________
+
+robot = <Element 'robot' at 0x7dc678bf8ef0>
+
+    def test_sensor_parents(robot):
+        """A structurally valid tree must also have the correct sensor parent."""
+        for name in ('camera', 'lidar', 'imu'):
+            joint = robot.find(f"joint[@name='{name}_joint']")
+>           assert joint.find('parent').get('link') == 'base_link', name
+E           AssertionError: lidar
+E           assert 'camera_link' == 'base_link'
+E             - base_link
+E             + camera_link
+
+src/course_description/test/test_geometry.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED src/course_description/test/test_geometry.py::test_sensor_parents - As...
+1 failed, 3 passed in 0.19s
+
+exit=1
+
+## fixed
+$ check_urdf /home/iakup/robotics_ws/evidence/pr06/fixed.urdf
+robot name is: course_ackermann
+---------- Successfully Parsed XML ---------------
+root Link: base_link has 7 child(ren)
+    child(1):  camera_link
+    child(2):  front_left_knuckle
+        child(1):  front_left_wheel
+    child(3):  front_right_knuckle
+        child(1):  front_right_wheel
+    child(4):  imu_link
+    child(5):  lidar_link
+    child(6):  rear_left_wheel
+    child(7):  rear_right_wheel
+
+exit=0
+$ python3 -m pytest -q src/course_description/test/test_geometry.py
+....                                                                     [100%]
+4 passed in 0.12s
+
+exit=0
+check_urdf accepts both trees; only the semantic parent test detects this defect.

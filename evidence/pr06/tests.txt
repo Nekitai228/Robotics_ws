@@ -1,0 +1,17 @@
+Starting >>> course_description
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+cachedir: /home/iakup/robotics_ws/build/course_description/.pytest_cache
+rootdir: /home/iakup/robotics_ws/src/course_description
+plugins: ament-copyright-0.17.5, ament-xmllint-0.17.5, launch-testing-ros-0.26.13, ament-lint-0.17.5, launch-testing-3.4.12, ament-flake8-0.17.5, ament-pep257-0.17.5, cov-4.1.0, colcon-core-0.21.3
+collected 6 items
+
+test/test_flake8.py .                                                    [ 16%]
+test/test_geometry.py ....                                               [ 83%]
+test/test_pep257.py .                                                    [100%]
+
+- generated xml file: /home/iakup/robotics_ws/build/course_description/pytest.xml -
+============================== 6 passed in 0.72s ===============================
+Finished <<< course_description [2.77s]
+
+Summary: 1 package finished [3.17s]
